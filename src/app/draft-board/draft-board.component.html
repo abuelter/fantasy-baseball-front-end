@@ -1,1 +1,24 @@
-<p>draft-board works!</p>
+<div class="w-100 h-100">
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Team</th>
+                <th>Positions</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(player of players; track player) {
+            <tr>
+                <td>{{ player.rank }}</td>
+                <td>{{ player.name }}</td>
+                <td>{{ player.team }}</td>
+                <td>{{ player.positions }}</td>
+                <td><button mat-raised-button color="primary">Drafted</button></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

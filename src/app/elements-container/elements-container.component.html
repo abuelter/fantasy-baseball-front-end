@@ -1,0 +1,11 @@
+<div class="h-100">
+    <mat-grid-list class="h-100" cols="8" rowHeight="fit">
+        <mat-grid-tile colspan="6" rowspan="4" class="w-100">
+            <app-draft-board [players]="players" class="w-100 h-100" style="overflow-y: scroll;"></app-draft-board>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="4"><p>Watch List</p></mat-grid-tile>
+        @for (pos of positions; track pos) {
+            <mat-grid-tile colspan="1" rowspan="4">{{pos}}</mat-grid-tile>
+        }
+    </mat-grid-list>
+</div>

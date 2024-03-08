@@ -1,21 +1,14 @@
-import { Component } from '@angular/core';
-import { PlayersService } from '../players.service';
+import { Component, Input } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'app-draft-board',
   standalone: true,
-  imports: [],
+  imports: [ MatButtonModule ],
   templateUrl: './draft-board.component.html',
   styleUrl: './draft-board.component.scss'
 })
 export class DraftBoardComponent {
-
-  constructor(private playersService: PlayersService) {}
-
-  ngOnInit() {
-    this.playersService.getPlayers().subscribe(res => {
-      console.log(res);
-    });
-  }
-
+  @Input() players: Array<any> | undefined;
 }
