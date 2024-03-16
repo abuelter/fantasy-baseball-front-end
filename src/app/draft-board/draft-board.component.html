@@ -1,4 +1,8 @@
 <div class="w-100 h-100">
+    <mat-form-field class="w-100">
+        <mat-label>Search Players</mat-label>
+        <input matInput [formControl]="searchVal">
+    </mat-form-field>
     <table>
         <thead>
             <tr>
@@ -6,18 +10,57 @@
                 <th>Name</th>
                 <th>Team</th>
                 <th>Positions</th>
+                @if(statType === 'Hitter') {
+                    <th>AVG</th>
+                    <th>HR</th>
+                    <th>R</th>
+                    <th>RBI</th>
+                    <th>SB</th>
+                    <th>K</th>
+                } @else {
+                    <th>ERA</th>
+                    <th>WHIP</th>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>SV</th>
+                    <th>K</th>
+                }
+                <th></th>
                 <th></th>
             </tr>
         </thead>
-        <tbody>
-            @for(player of players; track player) {
-            <tr>
-                <td>{{ player.rank }}</td>
-                <td>{{ player.name }}</td>
-                <td>{{ player.team }}</td>
-                <td>{{ player.positions }}</td>
-                <td><button mat-raised-button color="primary">Drafted</button></td>
-            </tr>
+        <tbody class="small-table-buttons">
+            @for(player of filteredPlayers; track player) {
+                @if((!showDrafted && !player.drafted) || showDrafted) {
+                    <tr [class.drafted] = "player.drafted">
+                        <td>{{ player.rank }}</td>
+                        <td>{{ player.name }}</td>
+                        <td>{{ player.team }}</td>
+                        <td>{{ player.positions }}</td>
+                        @if(statType === 'Hitter') {
+                            <td>{{ player.avg ? player.avg : ''}}</td>
+                            <td>{{ player.hr ? player.hr : ''}}</td>
+                            <td>{{ player.r ? player.r : ''}}</td>
+                            <td>{{ player.rbi ? player.rbi : ''}}</td>
+                            <td>{{ player.sb ? player.sb : ''}}</td>
+                            <td>{{ player.k ? player.k : ''}}</td>
+                        } @else {
+                            <td>{{ player.era ? player.era : ''}}</td>
+                            <td>{{ player.whip ? player.whip : ''}}</td>
+                            <td>{{ player.w ? player.w : ''}}</td>
+                            <td>{{ player.l ? player.l : ''}}</td>
+                            <td>{{ player.sv ? player.sv : ''}}</td>
+                            <td>{{ player.k ? player.k : ''}}</td>
+                        }
+                        @if(player.drafted) {
+                            <td><button mat-raised-button color="warn" (click)="undoDraft(player)" class="mat-small">Undo</button></td>    
+                        } @else {
+                            <td><button mat-raised-button color="primary" (click)="draft(player)" class="mat-small">Drafted</button></td>
+                        }
+                        <td><button mat-raised-button (click)="addToWatchList(player)" class="mat-small">Watch
+                        List</button> </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>

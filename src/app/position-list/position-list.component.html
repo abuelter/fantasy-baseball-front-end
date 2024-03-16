@@ -1,1 +1,14 @@
-<p>position-list works!</p>
+<mat-toolbar class="w-100">
+    {{position}}
+</mat-toolbar>
+<mat-list class="small-list">
+    @for(player of filteredPlayers; track player; let i = $index) {
+        @if(!player.drafted || showDrafted) {
+            <mat-list-item class="font-12" [class.last-of-tier]="lastOfTier(i)">
+                <div class="watch-list-container font-12">
+                    <span>{{ player.rank }} {{ player.name }} {{ player.team }}</span>
+                </div>
+            </mat-list-item>
+        }
+    }
+</mat-list>

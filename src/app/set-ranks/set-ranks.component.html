@@ -1,0 +1,24 @@
+<div>
+    <mat-toolbar>
+        <div class="w-100 small-form-field align-things-center">
+            <span>Set Ranks</span>
+            <div class="align-things-center">
+                <button mat-raised-button color="primary" style="margin-right: 1em;" (click)="saveRanks()">Save Ranks</button>
+            </div>
+        </div>
+    </mat-toolbar>
+    <mat-list class="smallest-list" cdkDropList (cdkDropListDropped)="drop($event)">
+        @for(player of players; track player) {
+            <mat-list-item cdkDrag>
+                <div class="font-10">
+                    <span>{{player.rank}} {{ player.name }} {{ player.team }} {{ player.positions }}</span>
+                    @if(player.positions.split(',').includes('SP') || player.positions.split(',').includes('RP')) {
+                    {{player.era}}/{{player.whip}}/{{player.w}}/{{player.l}}/{{player.sv}}/{{player.k}}
+                    } @else {
+                    {{player.avg}}/{{player.hr}}/{{player.r}}/{{player.rbi}}/{{player.sb}}/{{player.k}}
+                    }
+                </div>
+            </mat-list-item>
+        }
+    </mat-list>
+</div>

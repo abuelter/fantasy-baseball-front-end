@@ -1,0 +1,54 @@
+<div>
+    <mat-toolbar>
+        <div class="w-100 small-form-field align-things-center">
+            <span>Build Tiers</span>
+            <div class="align-things-center">
+                <button mat-raised-button color="primary" style="margin-right: 1em;" (click)="saveTiers()"
+                    [disabled]="cantSave()">Save Tiers</button>
+                <button mat-raised-button color="accent" style="margin-right: 1em;" (click)="addTier()">Add
+                    Tier</button>
+                <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                    <mat-label class="font-12">Select Position</mat-label>
+                    <mat-select [formControl]="selectedPosition" class="mat-small">
+                        @for(pos of positions; track pos) {
+                        <mat-option [value]="pos">{{pos}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-toolbar>
+    <div cdkDropListGroup>
+        @for(tier of tieredPlayers; track tier; let i = $index) {
+        <div class="tiers-container">
+            <mat-card class="w-80">
+                <mat-card-header>
+                    <div class="justify-content-between small-table-buttons w-100">
+                        <mat-card-title>Tier {{tier.tier}}</mat-card-title>
+                        @if(tier.players.length === 1 && tier.players[0].placeholder) {
+                            <button mat-raised-button color="warn" (click)="removeTier(i)">Remove</button>
+                        }
+                    </div>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-list class="smallest-list" cdkDropList [cdkDropListData]="tier.players"
+                        (cdkDropListDropped)="drop($event)">
+                        @for(player of tier.players; track player) {
+                        <mat-list-item cdkDrag>
+                            <div class="font-10">
+                                <span>{{player.rank}} {{ player.name }} {{ player.team }} {{ player.positions }}</span>
+                                @if(selectedPosition.value === 'SP' || selectedPosition.value === 'RP') {
+                                {{player.era}}/{{player.whip}}/{{player.w}}/{{player.l}}/{{player.sv}}/{{player.k}}
+                                } @else {
+                                {{player.avg}}/{{player.hr}}/{{player.r}}/{{player.rbi}}/{{player.sb}}/{{player.k}}
+                                }
+                            </div>
+                        </mat-list-item>
+                        }
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        }
+    </div>
+</div>

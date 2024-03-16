@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Add Tier</h1>
+<mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Select Tier to Add</mat-label>
+        <mat-select [(value)]="selectedTier">
+            @for(tier of tiers; track tier) {
+                <mat-option [value]="tier">{{ tier }} </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="addTier()">Add Tier</button>
+</mat-dialog-actions>

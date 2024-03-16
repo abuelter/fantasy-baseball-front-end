@@ -1,11 +1,34 @@
 <div class="h-100">
-    <mat-grid-list class="h-100" cols="8" rowHeight="fit">
+    <mat-toolbar>
+        <div class="top-bar-container w-100">
+            <div class="left-top-bar">
+                <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item [routerLink]="['/rankings']">Edit Rankings</button>
+                    <button mat-menu-item [routerLink]="['/tiers']">Edit Tiers</button>
+                </mat-menu>
+                <span>Custom Draft Rankings</span>
+            </div>
+            <div>
+                <mat-radio-group class="margin-right-1" [formControl]="statType">
+                    <mat-radio-button value="Hitter">Hitter Stats</mat-radio-button>
+                    <mat-radio-button value="Pitcher">Pitcher Stats</mat-radio-button>
+                </mat-radio-group>
+                <mat-slide-toggle color="accent" [formControl]="showDrafted">Show Drafted</mat-slide-toggle>
+            </div>
+        </div>
+    </mat-toolbar>
+    <mat-grid-list class="h-max" cols="8" rowHeight="fit">
         <mat-grid-tile colspan="6" rowspan="4" class="w-100">
-            <app-draft-board [players]="players" class="w-100 h-100" style="overflow-y: scroll;"></app-draft-board>
+            <app-draft-board [players]="players" [showDrafted]="showDrafted.value" [statType]="statType.value"
+                (addToList)="addToWatchList($event)" class="w-100 h-100"
+                style="overflow-y: scroll; overflow-x: visible;"></app-draft-board>
         </mat-grid-tile>
-        <mat-grid-tile colspan="2" rowspan="4"><p>Watch List</p></mat-grid-tile>
+        <mat-grid-tile colspan="2" rowspan="4"><app-watch-list [watchList]="watchList" [showDrafted] = "showDrafted.value" 
+                class="w-100 h-100"></app-watch-list></mat-grid-tile>
         @for (pos of positions; track pos) {
-            <mat-grid-tile colspan="1" rowspan="4">{{pos}}</mat-grid-tile>
+        <mat-grid-tile colspan="1" rowspan="4"><app-position-list class="w-100 h-100 overflow-y-scroll" [position]="pos" [showDrafted] = "showDrafted.value"
+                [players]="players"></app-position-list></mat-grid-tile>
         }
     </mat-grid-list>
 </div>

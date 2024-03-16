@@ -1,1 +1,15 @@
-<p>watch-list works!</p>
+<mat-toolbar class="w-100">
+    Watch List
+</mat-toolbar>
+<mat-list>
+    @for(player of watchList; track player; let i = $index) {
+        @if(!player.drafted || showDrafted) {
+            <mat-list-item>
+                <div class="watch-list-container small-table-buttons small-list">
+                    <span>{{ player.name }}</span>
+                    <button mat-raised-button class="mat-small" color="warn" (click)="removeFromList(i)">Remove</button>
+                </div>
+            </mat-list-item>
+        }
+    }
+</mat-list>
